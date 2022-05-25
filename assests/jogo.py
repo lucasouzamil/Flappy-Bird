@@ -1,21 +1,37 @@
-print('Hello World!')
 from email.mime import image
-import pygame
+import pygame, random
+from sys import exit
+
 pygame.init()
-WIDTH = 600
-HEIGHT = 600
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+
+TAMCELULAS = 40
+qntdCEL_x = 35
+qntdCEL_y = 20
+
+celula = pygame.Surface((TAMCELULAS,TAMCELULAS))
+celula.fill((158, 179, 152))
+window = pygame.display.set_mode((qntdCEL_x*TAMCELULAS, qntdCEL_y*TAMCELULAS))
 game=True
-maca_image=pygame.image.load('').convert()
+
+def desenhacampo(cellsize,qntdx,qntdy,cel):
+
+    for celulax in range(qntdx):
+        for celulay in range(qntdy):
+            window.blit(cel,(celulax*cellsize,celulay*cellsize))
+
 class maca(pygame.sprite.Sprite):
        def __init__(self,):
             pygame.sprite.Sprite.__init__(self)
-            self.image=maca_image
-            self.rect = self.image.get_rect()
             self.rect.x = (300,300)
             self.rect.y =(300,300)
+  
 while game:
+
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            game=False
+            pygame.exit()
+            exit()
+    desenhacampo(TAMCELULAS,qntdCEL_x,qntdCEL_y,celula)
+    window.fill((255,255,255))
+    #desenhacampo(TAMCELULAS,qntdCEL_x,qntdCEL_y)
 pygame.quit()
