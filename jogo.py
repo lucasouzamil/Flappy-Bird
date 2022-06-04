@@ -30,9 +30,9 @@ modobackground = 'dia'
 #CLASSES
 
 class Chao(pygame.sprite.Sprite):
-    def _init_(self, posx):
+    def __init__(self, posx):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.chao_img = pygame.transform.scale(pygame.image.load('assets/sprites/base.png').convert_alpha(), (SCREEN_WIDTH, CHAO_ALTURA))
         self.image = self.chao_img
