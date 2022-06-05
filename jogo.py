@@ -77,7 +77,6 @@ while GAMEON:
 
     screen.blit(background[modobackground], (0,0))
 
-
     all_sprites_jogando.update()
     all_sprites_jogando.draw(screen)
 
