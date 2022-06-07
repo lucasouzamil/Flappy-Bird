@@ -65,9 +65,9 @@ for i in range(10):
 #CLASSES
 
 class Chao(pygame.sprite.Sprite):
-    def __init__(self, posx):
+    def _init_(self, posx):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
 
         self.chao_img = pygame.transform.scale(pygame.image.load('assets/sprites/base.png').convert_alpha(), (SCREEN_WIDTH, CHAO_ALTURA))
         self.image = self.chao_img
@@ -82,8 +82,8 @@ class Chao(pygame.sprite.Sprite):
             self.rect.left = SCREEN_WIDTH
 
 class Cano(pygame.sprite.Sprite):
-    def __init__(self, invertido):
-        pygame.sprite.Sprite.__init__(self)
+    def _init_(self, invertido):
+        pygame.sprite.Sprite._init_(self)
 
         self.cores = { 'verde':  pygame.transform.scale(pygame.image.load('assets/sprites/pipe-green.png').convert_alpha(), (CANO_WIDTH, CANO_HEIGHT)),
                        'vermelho':pygame.transform.scale(pygame.image.load('assets/sprites/pipe-red.png').convert_alpha(), (CANO_WIDTH, CANO_HEIGHT))}
@@ -133,9 +133,9 @@ class Cano(pygame.sprite.Sprite):
             self.rect.top = self.posicaox
 
 class Periquito(pygame.sprite.Sprite):
-    def __init__(self):
+    def _init_(self):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
 
         self.cores = { 'amarelo':[pygame.transform.scale(pygame.image.load('assets/sprites/yellowbird-downflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
                                   pygame.transform.scale(pygame.image.load('assets/sprites/yellowbird-midflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
@@ -148,7 +148,11 @@ class Periquito(pygame.sprite.Sprite):
                            'azul':[pygame.transform.scale(pygame.image.load('assets/sprites/bluebird-downflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
                                   pygame.transform.scale(pygame.image.load('assets/sprites/bluebird-midflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
                                   pygame.transform.scale(pygame.image.load('assets/sprites/bluebird-upflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
-                                  pygame.transform.scale(pygame.image.load('assets/sprites/bluebird-midflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT))]}
+                                  pygame.transform.scale(pygame.image.load('assets/sprites/bluebird-midflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT))],
+                      'humberto':[pygame.transform.scale(pygame.image.load('assets/sprites/humberto1.PNG').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.25)),
+                                  pygame.transform.scale(pygame.image.load('assets/sprites/humberto2.PNG').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.25)),
+                                  pygame.transform.scale(pygame.image.load('assets/sprites/humberto3.PNG').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.25)),
+                                  pygame.transform.scale(pygame.image.load('assets/sprites/humberto1.PNG').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.25))]}
 
         self.impulso_snd = pygame.mixer.Sound('assets/snd/impulse.wav')
         self.crashing_snd = pygame.mixer.Sound('assets/snd/crashing.wav')
@@ -249,9 +253,9 @@ class Periquito(pygame.sprite.Sprite):
         self.rect.centery = SCREEN_HEIGHT /2
 
 class Menu(pygame.sprite.Sprite):
-    def __init__(self):
+    def _init_(self):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite.__init__(self)
+        pygame.sprite.Sprite._init_(self)
 
         menu_img = pygame.image.load('assets/sprites/menucompletoletras.png').convert_alpha()
         tamanhopainelx = SCREEN_WIDTH*0.6
