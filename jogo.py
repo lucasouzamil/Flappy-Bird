@@ -48,6 +48,20 @@ for key in background.keys():
 
 modobackground = 'dia'
 
+inicio_img = pygame.image.load('assets/sprites/message.png').convert_alpha()
+inicio_imgx = 0.4*SCREEN_HEIGHT
+inicio_imgy = 1.5*inicio_imgx
+inicio_img = pygame.transform.scale(inicio_img, (inicio_imgx, inicio_imgy))
+gameover_img = pygame.image.load('assets/sprites/gameovercompleto.png').convert_alpha()
+tamanhogameoverx = SCREEN_WIDTH*0.5
+tamanhogameovery = tamanhogameoverx*1.2
+gameover_img = pygame.transform.scale(gameover_img, (tamanhogameoverx, tamanhogameovery))
+pontos_widht = 0.15*tamanhogameoverx
+pontos_height = 1.7 * pontos_widht
+numbers = {}
+for i in range(10):
+    numbers[i] = pygame.transform.scale(pygame.image.load(f'assets/sprites/{i}.png').convert_alpha(), (pontos_widht, pontos_height))
+
 
 #CLASSES
 
@@ -237,6 +251,30 @@ class Periquito(pygame.sprite.Sprite):
 
 #FUNCOES
 
+def mostrapontosgameover():
+    pontosstr = str(PONTUACAO)
+    if state_game == 'gameover':
+        if  len(pontosstr) == 1:
+            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2 - pontos_widht/2 , SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
+        elif len(pontosstr) == 2:
+            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
+            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2 - pontos_widht, SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
+        elif len(pontosstr) == 3:
+            screen.blit(numbers[int(pontosstr[2])],(SCREEN_WIDTH/2 + pontos_widht/2 , SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
+            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2 - pontos_widht/2, SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
+            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2 - pontos_widht-pontos_widht/2 , SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
+
+    elif state_game == 'jogando':
+        if  len(pontosstr) == 1:
+            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2-pontos_widht/2,SCREEN_HEIGHT/15))
+        elif len(pontosstr) == 2:
+            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2,SCREEN_HEIGHT/15))
+            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2-pontos_widht,SCREEN_HEIGHT/15))
+        elif len(pontosstr) == 3:
+            screen.blit(numbers[int(pontosstr[2])],(SCREEN_WIDTH/2+0.5*pontos_widht,SCREEN_HEIGHT/15))
+            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2-pontos_widht/2,SCREEN_HEIGHT/15))
+            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2-1.5*pontos_widht,SCREEN_HEIGHT/15))
+
 #DECLARAÇÃO DOS GRUPOS DAS CLASSES E DOS OBJETOS
 
 canos   = pygame.sprite.Group()
@@ -282,10 +320,15 @@ while GAMEON:
                     VELOCIDADE_JOGO = -5
                     GRAVIDADE = GRAVIDADEIDEAL
 
-    screen.blit(background[modobackground], (0,0))
+    if state_game == 'start':
+        screen.blit(background[modobackground], (0,0))
+        screen.blit(inicio_img,(SCREEN_WIDTH/2-inicio_imgx/2,SCREEN_HEIGHT/2-inicio_imgy/2))
 
-    all_sprites_jogando.update()
-    all_sprites_jogando.draw(screen)
+    if state_game == 'jogando':
+        screen.blit(background[modobackground], (0,0))
+        all_sprites_jogando.update()
+        all_sprites_jogando.draw(screen)
+        mostrapontosgameover()
 
     pygame.display.update()
     clock.tick(FPS)
