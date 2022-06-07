@@ -52,9 +52,9 @@ modobackground = 'dia'
 #CLASSES
 
 class Chao(pygame.sprite.Sprite):
-    def _init_(self, posx):
+    def __init__(self, posx):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.chao_img = pygame.transform.scale(pygame.image.load('assets/sprites/base.png').convert_alpha(), (SCREEN_WIDTH, CHAO_ALTURA))
         self.image = self.chao_img
@@ -69,8 +69,8 @@ class Chao(pygame.sprite.Sprite):
             self.rect.left = SCREEN_WIDTH
 
 class Cano(pygame.sprite.Sprite):
-    def _init_(self, invertido):
-        pygame.sprite.Sprite._init_(self)
+    def __init__(self, invertido):
+        pygame.sprite.Sprite.__init__(self)
 
         self.cores = { 'verde':  pygame.transform.scale(pygame.image.load('assets/sprites/pipe-green.png').convert_alpha(), (CANO_WIDTH, CANO_HEIGHT)),
                        'vermelho':pygame.transform.scale(pygame.image.load('assets/sprites/pipe-red.png').convert_alpha(), (CANO_WIDTH, CANO_HEIGHT))}
@@ -120,9 +120,9 @@ class Cano(pygame.sprite.Sprite):
             self.rect.top = self.posicaox
 
 class Periquito(pygame.sprite.Sprite):
-    def _init_(self):
+    def __init__(self):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.cores = { 'amarelo':[pygame.transform.scale(pygame.image.load('assets/sprites/yellowbird-downflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
                                   pygame.transform.scale(pygame.image.load('assets/sprites/yellowbird-midflap.png').convert_alpha(), (PERIQUITO_WIDTH, PERIQUITO_HEIGHT)),
