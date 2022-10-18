@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\DESOFT"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\Codes"
+		},
+		{
+			"path": "..\\..\\..\\OneDrive\\Documentos\\Instagram"
+		},
+		{
+			"path": "..\\..\\..\\OneDrive\\Documentos\\exercicio"
+		},
+		{
+			"path": "..\\..\\..\\OneDrive\\Área de Trabalho\\Exercicios"
+		},
+		{
+			"path": "..\\..\\..\\OneDrive\\Documentos\\Projeto_Onishi"
+		},
+		{
+			"path": "..\\..\\..\\OneDrive\\Área de Trabalho\\Prova Codes"
+		},
+		{
+			"path": "..\\..\\..\\OneDrive\\Área de Trabalho\\Cafeista-App"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Cafeista-App"
+	}
+}
