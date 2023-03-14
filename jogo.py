@@ -3,7 +3,7 @@ from sys import exit
 
 pygame.init()
 
-#CONFIGURAÇÔES
+#CONFIGURAÇÔES TESTE
 
 SCREEN_WIDTH  = 400
 SCREEN_HEIGHT = 750
