@@ -120,7 +120,6 @@ class Cano(pygame.sprite.Sprite):
             self.posicaox = random.randint(CANO_TAMNHOMINIMO+cano_gap, SCREEN_HEIGHT-CHAO_ALTURA-CANO_TAMNHOMINIMO)
             self.rect.top = self.posicaox
 
-
 class Periquito(pygame.sprite.Sprite):
     def __init__(self):
         # Construtor da classe mãe (Sprite).
@@ -287,7 +286,6 @@ class Menu(pygame.sprite.Sprite):
         self.click_sound.play()
 
 #FUNCOES
-
 def mostrapontosgameover():
     pontosstr = str(pontuacao)
     if state_game == 'gameover':
