@@ -1,7 +1,6 @@
 import pygame, random
 from configs import *
 from assets import *
-from classes import *
 from sys import exit
 
 pygame.init()
@@ -35,7 +34,7 @@ for i in range(10):
     numbers[i] = pygame.transform.scale(pygame.image.load(f'assets/sprites/{i}.png').convert_alpha(), (pontos_widht, pontos_height))
 
 #sprites
-yellow_downflap_mask = pygame.image.load(yellow_downflap_img).convert_alpha()
+""" yellow_downflap_mask = pygame.image.load(yellow_downflap_img).convert_alpha()
 yellow_midflap_mask = pygame.image.load(yellow_midflap_img).convert_alpha()
 yellow_upflap_mask = pygame.image.load(yellow_upflap_img).convert_alpha()
 
@@ -49,9 +48,9 @@ blue_upflap_mask = pygame.image.load(blue_upflap_img).convert_alpha()
 
 humb_downflap_mask = pygame.image.load(humb_downflap_img).convert_alpha()
 humb_midflap_mask = pygame.image.load(humb_midflap_img).convert_alpha()
-humb_upflap_mask = pygame.image.load(humb_upflap_img).convert_alpha()
-#CLASSES
+humb_upflap_mask = pygame.image.load(humb_upflap_img).convert_alpha() """
 
+#CLASSES
 class Chao(pygame.sprite.Sprite):
     def __init__(self, posx):
         # Construtor da classe mãe (Sprite).
@@ -121,34 +120,36 @@ class Cano(pygame.sprite.Sprite):
             self.rect.top = self.posicaox
 
 class Periquito(pygame.sprite.Sprite):
+
     def __init__(self):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
-        self.cores = { 'amarelo':[pygame.transform.scale(yellow_downflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(yellow_midflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(yellow_upflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(yellow_midflap_mask, PERIQUITO_SIZE)],
-                                    'vermelho':[pygame.transform.scale(red_downflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(red_midflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(red_upflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(red_midflap_mask, PERIQUITO_SIZE)],
-                                                'azul':[pygame.transform.scale(blue_downflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(blue_midflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(blue_upflap_mask, PERIQUITO_SIZE),
-                                                            pygame.transform.scale(blue_midflap_mask, PERIQUITO_SIZE)],
-                                 'humberto':[pygame.transform.scale(humb_downflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3)),
-                                                            pygame.transform.scale(humb_midflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3)),
-                                                            pygame.transform.scale(humb_upflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3)),
-                                                            pygame.transform.scale(humb_midflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3))]}
-
+        self.cores={}
+        def cria_skin(skin):
+            if skin!='humberto':
+                tamanho = PERIQUITO_SIZE
+            else:
+                tamanho = HUMBERTO_SIZE
+            downflap_mask = pygame.image.load('assets/sprites/'+skin+'bird-downflap.png').convert_alpha()
+            midflap_mask = pygame.image.load('assets/sprites/'+skin+'bird-midflap.png').convert_alpha()
+            upflap_mask = pygame.image.load('assets/sprites/'+skin+'bird-upflap.png').convert_alpha()
+            self.cores[skin]= [pygame.transform.scale(downflap_mask, tamanho),
+                            pygame.transform.scale(midflap_mask, tamanho),
+                            pygame.transform.scale(upflap_mask, tamanho),
+                            pygame.transform.scale(midflap_mask, tamanho)]
+        cria_skin('yellow')
+        cria_skin('red')
+        cria_skin('blue')
+        cria_skin('humberto')
+        
         self.impulso_snd = pygame.mixer.Sound(impulso_snd)
         self.crashing_snd = pygame.mixer.Sound(crashing_snd)
         self.falling_snd = pygame.mixer.Sound(falling_snd)
         self.point_snd =  pygame.mixer.Sound(point_snd)
 
         self.alternadordoperiquito = 0
-        self.cordoperiquito = 'amarelo'
+        self.cordoperiquito = 'yellow'
+        
         self.image = self.cores[self.cordoperiquito][self.alternadordoperiquito]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -162,6 +163,9 @@ class Periquito(pygame.sprite.Sprite):
         self.alternaimagempermitida = True
         self.ultimatroca = pygame.time.get_ticks()
         self.tempodetroca = 100
+        
+        
+
 
     def update(self):
         self.movimentovertical()
@@ -257,13 +261,13 @@ class Menu(pygame.sprite.Sprite):
         self.rect.center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
 
     def periquitoamarelo(self):
-        player.cordoperiquito = 'amarelo'
+        player.cordoperiquito = 'yellow'
         self.click_sound.play()
     def periquitovermelho(self):
-        player.cordoperiquito = 'vermelho'
+        player.cordoperiquito = 'red'
         self.click_sound.play()
     def periquitoazul(self):
-        player.cordoperiquito = 'azul'
+        player.cordoperiquito = 'blue'
         self.click_sound.play()
     def periquitohumberto(self):
         player.cordoperiquito = 'humberto'
@@ -284,6 +288,7 @@ class Menu(pygame.sprite.Sprite):
         global modobackground
         modobackground = 'noite'
         self.click_sound.play()
+
 
 #FUNCOES
 def mostrapontosgameover():
