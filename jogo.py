@@ -33,7 +33,6 @@ numbers = {}
 for i in range(10):
     numbers[i] = pygame.transform.scale(pygame.image.load(f'assets/sprites/{i}.png').convert_alpha(), (pontos_widht, pontos_height))
 
-
 #CLASSES
 class Chao(pygame.sprite.Sprite):
     def __init__(self, posx):
