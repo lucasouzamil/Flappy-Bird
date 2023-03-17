@@ -1,40 +1,10 @@
 import pygame, random
-from configs import *
+from jogo import *
 from assets import *
-from sys import exit
-
-pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-pygame.display.set_caption('Flappy Bird')
-clock = pygame.time.Clock()
-FPS = 60
-
-#---------------ASSETS-----------------
-# interface
-background = {'dia'  :  pygame.image.load(dia_img).convert(),
-              'noite':  pygame.image.load(noite_img).convert()}
-for key in background.keys():
-    background[key] = pygame.transform.scale(background[key], (SCREEN_WIDTH, SCREEN_HEIGHT))
-modobackground = 'dia'
-
-inicio_img = pygame.image.load('assets/sprites/message.png').convert_alpha()
-inicio_imgx = 0.4*SCREEN_HEIGHT
-inicio_imgy = 1.5*inicio_imgx
-inicio_img = pygame.transform.scale(inicio_img, (inicio_imgx, inicio_imgy))
-
-tamanhogameoverx = SCREEN_WIDTH*0.5
-tamanhogameovery = tamanhogameoverx*1.2
-gameover_maks = pygame.image.load('assets/sprites/gameovercompleto.png').convert_alpha()
-gameover_maks = pygame.transform.scale(gameover_maks, (tamanhogameoverx, tamanhogameovery))
-
-pontos_widht = 0.15*tamanhogameoverx
-pontos_height = 1.7 * pontos_widht
-numbers = {}
-for i in range(10):
-    numbers[i] = pygame.transform.scale(pygame.image.load(f'assets/sprites/{i}.png').convert_alpha(), (pontos_widht, pontos_height))
-
+from configs import *
 
 #CLASSES
+
 class Chao(pygame.sprite.Sprite):
     def __init__(self, posx):
         # Construtor da classe mãe (Sprite).
@@ -103,37 +73,36 @@ class Cano(pygame.sprite.Sprite):
             self.posicaox = random.randint(CANO_TAMNHOMINIMO+cano_gap, SCREEN_HEIGHT-CHAO_ALTURA-CANO_TAMNHOMINIMO)
             self.rect.top = self.posicaox
 
-class Periquito(pygame.sprite.Sprite):
 
+class Periquito(pygame.sprite.Sprite):
     def __init__(self):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-        self.cores={}
-        def cria_skin(skin):
-            if skin!='humberto':
-                tamanho = PERIQUITO_SIZE
-            else:
-                tamanho = HUMBERTO_SIZE
-            downflap_mask = pygame.image.load('assets/sprites/'+skin+'bird-downflap.png').convert_alpha()
-            midflap_mask = pygame.image.load('assets/sprites/'+skin+'bird-midflap.png').convert_alpha()
-            upflap_mask = pygame.image.load('assets/sprites/'+skin+'bird-upflap.png').convert_alpha()
-            self.cores[skin]= [pygame.transform.scale(downflap_mask, tamanho),
-                            pygame.transform.scale(midflap_mask, tamanho),
-                            pygame.transform.scale(upflap_mask, tamanho),
-                            pygame.transform.scale(midflap_mask, tamanho)]
-        cria_skin('yellow')
-        cria_skin('red')
-        cria_skin('blue')
-        cria_skin('humberto')
-        
+
+        self.cores = { 'amarelo':[pygame.transform.scale(yellow_downflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(yellow_midflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(yellow_upflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(yellow_midflap_mask, PERIQUITO_SIZE)],
+                                    'vermelho':[pygame.transform.scale(red_downflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(red_midflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(red_upflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(red_midflap_mask, PERIQUITO_SIZE)],
+                                                'azul':[pygame.transform.scale(blue_downflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(blue_midflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(blue_upflap_mask, PERIQUITO_SIZE),
+                                                            pygame.transform.scale(blue_midflap_mask, PERIQUITO_SIZE)],
+                                 'humberto':[pygame.transform.scale(humb_downflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3)),
+                                                            pygame.transform.scale(humb_midflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3)),
+                                                            pygame.transform.scale(humb_upflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3)),
+                                                            pygame.transform.scale(humb_midflap_mask, (PERIQUITO_WIDTH, PERIQUITO_WIDTH*1.3))]}
+
         self.impulso_snd = pygame.mixer.Sound(impulso_snd)
         self.crashing_snd = pygame.mixer.Sound(crashing_snd)
         self.falling_snd = pygame.mixer.Sound(falling_snd)
         self.point_snd =  pygame.mixer.Sound(point_snd)
 
         self.alternadordoperiquito = 0
-        self.cordoperiquito = 'yellow'
-        
+        self.cordoperiquito = 'amarelo'
         self.image = self.cores[self.cordoperiquito][self.alternadordoperiquito]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -147,9 +116,6 @@ class Periquito(pygame.sprite.Sprite):
         self.alternaimagempermitida = True
         self.ultimatroca = pygame.time.get_ticks()
         self.tempodetroca = 100
-        
-        
-
 
     def update(self):
         self.movimentovertical()
@@ -245,13 +211,13 @@ class Menu(pygame.sprite.Sprite):
         self.rect.center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
 
     def periquitoamarelo(self):
-        player.cordoperiquito = 'yellow'
+        player.cordoperiquito = 'amarelo'
         self.click_sound.play()
     def periquitovermelho(self):
-        player.cordoperiquito = 'red'
+        player.cordoperiquito = 'vermelho'
         self.click_sound.play()
     def periquitoazul(self):
-        player.cordoperiquito = 'blue'
+        player.cordoperiquito = 'azul'
         self.click_sound.play()
     def periquitohumberto(self):
         player.cordoperiquito = 'humberto'
@@ -272,155 +238,3 @@ class Menu(pygame.sprite.Sprite):
         global modobackground
         modobackground = 'noite'
         self.click_sound.play()
-
-#FUNCOES
-def mostrapontosgameover():
-    pontosstr = str(pontuacao)
-    if state_game == 'gameover':
-        if  len(pontosstr) == 1:
-            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2 - pontos_widht/2 , SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
-        elif len(pontosstr) == 2:
-            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
-            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2 - pontos_widht, SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
-        elif len(pontosstr) == 3:
-            screen.blit(numbers[int(pontosstr[2])],(SCREEN_WIDTH/2 + pontos_widht/2 , SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
-            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2 - pontos_widht/2, SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
-            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2 - pontos_widht-pontos_widht/2 , SCREEN_HEIGHT/2 - 0.25*tamanhogameovery))
-
-    elif state_game == 'jogando':
-        if  len(pontosstr) == 1:
-            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2-pontos_widht/2,SCREEN_HEIGHT/15))
-        elif len(pontosstr) == 2:
-            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2,SCREEN_HEIGHT/15))
-            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2-pontos_widht,SCREEN_HEIGHT/15))
-        elif len(pontosstr) == 3:
-            screen.blit(numbers[int(pontosstr[2])],(SCREEN_WIDTH/2+0.5*pontos_widht,SCREEN_HEIGHT/15))
-            screen.blit(numbers[int(pontosstr[1])],(SCREEN_WIDTH/2-pontos_widht/2,SCREEN_HEIGHT/15))
-            screen.blit(numbers[int(pontosstr[0])],(SCREEN_WIDTH/2-1.5*pontos_widht,SCREEN_HEIGHT/15))
-
-def gameover():
-    global state_game, VELOCIDADE_JOGO, GRAVIDADE
-
-    state_game = 'gameover'
-    player.saltopermitido = False
-    player.alternaimagempermitida = False
-    VELOCIDADE_JOGO = 0
-    GRAVIDADE = 0
-
-def gameback():
-    global pontuacao, state_game, cano_gap, CANO_GAP_INCIAL
-
-    state_game = 'jogando'
-    player.saltopermitido = True
-    player.alternaimagempermitida = True
-    player.rect.centerx = SCREEN_WIDTH / 4
-    player.rect.centery = SCREEN_HEIGHT /2
-    player.speedx = 0
-    player.speedy = 0
-
-    canonormal.rect.left = SCREEN_HEIGHT-20
-    canonormal.posicaox = random.randint(CANO_TAMNHOMINIMO+cano_gap, SCREEN_HEIGHT-CHAO_ALTURA-CANO_TAMNHOMINIMO)
-    canonormal.rect.top = canonormal.posicaox
-
-    canoinvert.rect.left = canonormal.rect.left
-    canoinvert.rect.bottom = canonormal.rect.top - cano_gap
-
-    cano_gap = CANO_GAP_INCIAL
-    pontuacao = 0
-
-#DECLARAÇÃO DOS GRUPOS DAS CLASSES E DOS OBJETOS
-
-canos   = pygame.sprite.Group()
-chaos   = pygame.sprite.Group()
-players = pygame.sprite.Group()
-all_sprites_jogando = pygame.sprite.Group()
-
-player = Periquito()
-canonormal = Cano(False)
-canoinvert = Cano(True)
-
-menu = Menu()
-menus = pygame.sprite.Group()
-menus.add(menu)
-
-players.add(player)
-canos.add(canonormal)
-canos.add(canoinvert)
-
-all_sprites_jogando.add(canonormal)
-all_sprites_jogando.add(canoinvert)
-all_sprites_jogando.add(player)
-
-for i in range(2): 
-    if i == 0:
-        chao = Chao(0)
-    else:
-        chao = Chao(SCREEN_WIDTH)
-    chaos.add(chao)
-    all_sprites_jogando.add(chao)
-
-
-# LOOPING GAME
-state_game = 'start'
-GAMEON = True
-while GAMEON:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            GAMEON = False
-            pygame.quit()
-            exit()
-        #COMANDOS COM TECLADO
-        if event.type == pygame.KEYDOWN:
-            if state_game == 'jogando':
-                if event.key == pygame.K_SPACE:
-                    player.jump(INTENSIDADEPULO)
-                    VELOCIDADE_JOGO = -5
-                    GRAVIDADE = GRAVIDADEIDEAL
-            if state_game == 'gameover':
-                if event.key == pygame.K_SPACE:
-                    gameback()
-                if event.key == pygame.K_m:
-                    state_game = 'menu'
-            if state_game == 'start':
-                if event.key == pygame.K_SPACE:
-                    state_game = 'menu'
-            if state_game == 'menu':
-                if event.key == pygame.K_g:
-                    menu.canoverde()
-                if event.key == pygame.K_v:
-                    menu.canovermelho()
-                if event.key == pygame.K_d:
-                    menu.dia()
-                if event.key == pygame.K_n:
-                    menu.noite()
-                if event.key == pygame.K_1:
-                    menu.periquitoamarelo()
-                if event.key == pygame.K_2:
-                    menu.periquitovermelho()
-                if event.key == pygame.K_3:
-                    menu.periquitoazul()
-                if event.key == pygame.K_h:
-                    menu.periquitohumberto()
-                if event.key == pygame.K_ESCAPE:
-                    gameback()
-                    state_game = 'jogando'
-                    
-    screen.blit(background[modobackground], (0,0))
-    if state_game == 'start':
-        screen.blit(inicio_img,(SCREEN_WIDTH/2-inicio_imgx/2,SCREEN_HEIGHT/2-inicio_imgy/2))
-
-    if state_game == 'jogando':
-        all_sprites_jogando.update()
-        all_sprites_jogando.draw(screen)
-        mostrapontosgameover()
-
-    if state_game == 'menu':
-        menus.update()
-        menus.draw(screen)
-
-    if state_game == 'gameover':
-        screen.blit(gameover_maks, (SCREEN_WIDTH/2-tamanhogameoverx/2, SCREEN_HEIGHT/2-tamanhogameovery/2))
-        mostrapontosgameover()
-
-    pygame.display.update()
-    clock.tick(FPS)
