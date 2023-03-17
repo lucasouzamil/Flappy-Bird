@@ -404,24 +404,21 @@ while GAMEON:
                 if event.key == pygame.K_ESCAPE:
                     gameback()
                     state_game = 'jogando'
-
+                    
+    screen.blit(background[modobackground], (0,0))
     if state_game == 'start':
-        screen.blit(background[modobackground], (0,0))
         screen.blit(inicio_img,(SCREEN_WIDTH/2-inicio_imgx/2,SCREEN_HEIGHT/2-inicio_imgy/2))
 
     if state_game == 'jogando':
-        screen.blit(background[modobackground], (0,0))
         all_sprites_jogando.update()
         all_sprites_jogando.draw(screen)
         mostrapontosgameover()
 
     if state_game == 'menu':
-        screen.blit(background[modobackground], (0,0))
         menus.update()
         menus.draw(screen)
 
     if state_game == 'gameover':
-        screen.blit(background[modobackground], (0,0))
         screen.blit(gameover_maks, (SCREEN_WIDTH/2-tamanhogameoverx/2, SCREEN_HEIGHT/2-tamanhogameovery/2))
         mostrapontosgameover()
 
