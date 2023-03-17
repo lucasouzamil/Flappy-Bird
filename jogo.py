@@ -289,7 +289,6 @@ class Menu(pygame.sprite.Sprite):
         modobackground = 'noite'
         self.click_sound.play()
 
-
 #FUNCOES
 def mostrapontosgameover():
     pontosstr = str(pontuacao)
