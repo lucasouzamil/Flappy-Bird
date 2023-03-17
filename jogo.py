@@ -33,22 +33,6 @@ numbers = {}
 for i in range(10):
     numbers[i] = pygame.transform.scale(pygame.image.load(f'assets/sprites/{i}.png').convert_alpha(), (pontos_widht, pontos_height))
 
-#sprites
-""" yellow_downflap_mask = pygame.image.load(yellow_downflap_img).convert_alpha()
-yellow_midflap_mask = pygame.image.load(yellow_midflap_img).convert_alpha()
-yellow_upflap_mask = pygame.image.load(yellow_upflap_img).convert_alpha()
-
-red_downflap_mask = pygame.image.load(red_downflap_img).convert_alpha()
-red_midflap_mask = pygame.image.load(red_midflap_img).convert_alpha()
-red_upflap_mask = pygame.image.load(red_upflap_img).convert_alpha()
-
-blue_downflap_mask = pygame.image.load(blue_downflap_img).convert_alpha()
-blue_midflap_mask = pygame.image.load(blue_midflap_img).convert_alpha()
-blue_upflap_mask = pygame.image.load(blue_upflap_img).convert_alpha()
-
-humb_downflap_mask = pygame.image.load(humb_downflap_img).convert_alpha()
-humb_midflap_mask = pygame.image.load(humb_midflap_img).convert_alpha()
-humb_upflap_mask = pygame.image.load(humb_upflap_img).convert_alpha() """
 
 #CLASSES
 class Chao(pygame.sprite.Sprite):
